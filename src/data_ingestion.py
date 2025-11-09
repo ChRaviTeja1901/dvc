@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import os
+import yaml
 
 def load_data(url, file_path='data.csv'):
     """
@@ -22,12 +23,28 @@ def load_data(url, file_path='data.csv'):
     print(f"Data loaded with shape: {data.shape}")
     return data
 
-def encode_data(data):
+def load_params(param_path='params.yaml'):
+    """
+    Load parameters from a YAML file.
+
+    Parameters:
+    param_path (str): Path to the YAML file.
+
+    Returns:
+    dict: Parameters loaded from the YAML file.
+    """
+    with open(param_path, 'r') as f:
+        params = yaml.safe_load(f)
+        test_size = params['data_ingestion']['test_size']
+    return test_size
+
+def encode_data(data, test_size):
     """
     Encode categorical variables.
 
     Parameters:
     data (pd.DataFrame): The raw data.
+    test_size (float): Proportion of the dataset to include in the test split.
 
     Returns:
     pd.DataFrame: Preprocessed data.
@@ -35,8 +52,8 @@ def encode_data(data):
     data.drop(columns=['tweet_id'], inplace=True)  # Drop unnecessary columns
     data = data[data['sentiment'].isin(['happiness', 'sadness'])]  # Filter for specific sentiments
     data['sentiment'] = data['sentiment'].replace({'happiness': 1, 'sadness': 0})  # Encode sentiments
-    
-    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
+
+    train_data, test_data = train_test_split(data, test_size=test_size, random_state=42)
     return train_data, test_data
 
 def create_local_copy(train_data, test_data, train_path='train_data.csv', test_path='test_data.csv'):
@@ -55,6 +72,14 @@ def create_local_copy(train_data, test_data, train_path='train_data.csv', test_p
     train_data.to_csv(os.path.join(data_path, train_path), index=False)
     test_data.to_csv(os.path.join(data_path, test_path), index=False)
 
-data = load_data('https://raw.githubusercontent.com/campusx-official/jupyter-masterclass/main/tweet_emotions.csv')
-train_data, test_data = encode_data(data)
-create_local_copy(train_data, test_data)
+
+def main():
+    """Main function to execute data ingestion process."""
+    data = load_data('https://raw.githubusercontent.com/campusx-official/jupyter-masterclass/main/tweet_emotions.csv')
+    test_size = load_params()
+    train_data, test_data = encode_data(data, test_size)
+    create_local_copy(train_data, test_data)
+
+
+if __name__ == "__main__":
+    main()
