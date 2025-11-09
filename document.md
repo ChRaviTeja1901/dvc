@@ -1,4 +1,3 @@
-dvc repro
 # DVC + Project guide (step-by-step)
 
 This document explains, in simple steps, how this project is organized and how to run the pipeline using DVC and the Python scripts in `src/`.
@@ -164,13 +163,3 @@ This is useful for quick checks. But when the pipeline is tracked by DVC it's be
 3. Run pipeline: `dvc repro`
 4. View DAG: `dvc dag`
 5. Show metrics: `dvc metrics show`
-
-## What's next (ideas for learning)
-
-- Inspect `src/` scripts to see how data is loaded and saved. Try adding print statements to learn.
-- Try changing a parameter in `params.yaml` (if present) and run `dvc repro` to see how the pipeline updates.
-- Add a new stage (for example, a data visualization step) using `dvc stage add`.
-
----
-
-If you want, I can also add a short `README.md` with an even shorter quick-start or update `params.yaml` to show the most important parameters. Tell me which next step you'd like.
