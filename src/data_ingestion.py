@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 import os
 import yaml
 
-def load_data(url, file_path='data.csv'):
+def load_data(url: str, file_path: str = 'data.csv') -> pd.DataFrame:
     """
     Load data from a URL or local file path.
 
@@ -23,7 +23,7 @@ def load_data(url, file_path='data.csv'):
     print(f"Data loaded with shape: {data.shape}")
     return data
 
-def load_params(param_path='params.yaml'):
+def load_params(param_path: str = 'params.yaml') -> float:
     """
     Load parameters from a YAML file.
 
@@ -31,14 +31,14 @@ def load_params(param_path='params.yaml'):
     param_path (str): Path to the YAML file.
 
     Returns:
-    dict: Parameters loaded from the YAML file.
+    float: Test size parameter loaded from the YAML file.
     """
     with open(param_path, 'r') as f:
         params = yaml.safe_load(f)
         test_size = params['data_ingestion']['test_size']
     return test_size
 
-def encode_data(data, test_size):
+def encode_data(data: pd.DataFrame, test_size: float) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Encode categorical variables.
 
@@ -56,7 +56,7 @@ def encode_data(data, test_size):
     train_data, test_data = train_test_split(data, test_size=test_size, random_state=42)
     return train_data, test_data
 
-def create_local_copy(train_data, test_data, train_path='train_data.csv', test_path='test_data.csv'):
+def create_local_copy(train_data: pd.DataFrame, test_data: pd.DataFrame, train_path: str = 'train_data.csv', test_path: str = 'test_data.csv') -> None:
     """
     Save the preprocessed data to local CSV files.
 

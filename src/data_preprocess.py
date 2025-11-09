@@ -12,7 +12,7 @@ nltk.download('wordnet')
 
 
 # load the data from data/raw
-def load_data(train_path='data/raw/train_data.csv', test_path='data/raw/test_data.csv'):
+def load_data(train_path: str = 'data/raw/train_data.csv', test_path: str = 'data/raw/test_data.csv') -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Load raw data from CSV files.
     """
@@ -22,20 +22,20 @@ def load_data(train_path='data/raw/train_data.csv', test_path='data/raw/test_dat
 
 
 # preprocess the text data
-def lowercase_text(text):
+def lowercase_text(text: str) -> str:
     """
     Convert text to lowercase.
     """
     return str(text).lower()
 
-def remove_urls(text):
+def remove_urls(text: str) -> str:
     """
     Remove URLs from the text.
     """
     url_pattern = re.compile(r'https?://\S+|www\.\S+')
     return url_pattern.sub(r'', text)
 
-def remove_punctuation(text):
+def remove_punctuation(text: str) -> str:
     """
     Remove punctuation from the text.
     """
@@ -43,13 +43,13 @@ def remove_punctuation(text):
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
-def remove_numbers(text):
+def remove_numbers(text: str) -> str:
     """
     Remove numbers from the text.
     """
     return re.sub(r'\d+', '', str(text))
 
-def remove_stopwords(text):
+def remove_stopwords(text: str) -> str:
     """
     Remove stopwords from the text.
     """
@@ -58,7 +58,7 @@ def remove_stopwords(text):
     filtered_words = [word for word in words if word not in stop_words]
     return ' '.join(filtered_words)
 
-def lemmatize_text(text):
+def lemmatize_text(text: str) -> str:
     """
     Lemmatize the text.
     """
@@ -67,7 +67,7 @@ def lemmatize_text(text):
     lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
     return ' '.join(lemmatized_words)
 
-def fillna_with_empty(text):
+def fillna_with_empty(text: str) -> str:
     """
     Fill NaN values with empty strings.
     """
@@ -75,7 +75,7 @@ def fillna_with_empty(text):
         return ''
     return text
 
-def preprocess_data(train_data, test_data):
+def preprocess_data(train_data: pd.DataFrame, test_data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Preprocess the text data in the training and testing datasets.
     """
@@ -91,7 +91,7 @@ def preprocess_data(train_data, test_data):
     return train_data, test_data
 
 # save the preprocessed data to data/processed
-def save_preprocessed_data(train_data, test_data, train_path='train_data_processed.csv', test_path='test_data_processed.csv'):
+def save_preprocessed_data(train_data: pd.DataFrame, test_data: pd.DataFrame, train_path: str = 'train_data_processed.csv', test_path: str = 'test_data_processed.csv') -> None:
     """
     Save the preprocessed data to CSV files.
     """

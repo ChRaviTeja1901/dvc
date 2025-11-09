@@ -6,7 +6,7 @@ import pickle
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report, precision_score, recall_score, roc_auc_score
 
-def load_model(model_path='models/xgb_model.pkl'):
+def load_model(model_path: str = 'models/xgb_model.pkl') -> XGBClassifier:
     """
     Load the trained model from a file.
     """
@@ -14,7 +14,7 @@ def load_model(model_path='models/xgb_model.pkl'):
         model = pickle.load(f)
     return model
 
-def load_test_data(test_path='data/vectorized/test_data_vectorized.csv'):
+def load_test_data(test_path: str = 'data/vectorized/test_data_vectorized.csv') -> Tuple[pd.DataFrame, pd.Series]:
     """
     Load the vectorized test data from a CSV file.
     """
@@ -23,7 +23,7 @@ def load_test_data(test_path='data/vectorized/test_data_vectorized.csv'):
     y_test = test_data['label']
     return X_test, y_test
 
-def evaluate_model_on_data(model, X_test, y_test):
+def evaluate_model_on_data(model: XGBClassifier, X_test: pd.DataFrame, y_test: pd.Series) -> Tuple[float, float, float, float]:
     """
     Evaluate the model on the test data.
     """
@@ -38,7 +38,7 @@ def evaluate_model_on_data(model, X_test, y_test):
 
     return accuracy, precision, recall, roc_auc
 
-def dump_evaluation_results(results, result_path='results/evaluation_metrics.json'):
+def dump_evaluation_results(results: dict, result_path: str = 'results/evaluation_metrics.json') -> None:
     """
     Save the evaluation results to a JSON file.
     """

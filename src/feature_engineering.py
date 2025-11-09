@@ -6,7 +6,7 @@ import yaml
 from sklearn.feature_extraction.text import CountVectorizer
 
 # load the processed data from data/processed
-def load_processed_data(train_path='data/processed/train_data_processed.csv', test_path='data/processed/test_data_processed.csv'):
+def load_processed_data(train_path: str = 'data/processed/train_data_processed.csv', test_path: str = 'data/processed/test_data_processed.csv') -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Load processed data from CSV files.
     """
@@ -14,7 +14,7 @@ def load_processed_data(train_path='data/processed/train_data_processed.csv', te
     test_data = pd.read_csv(test_path)
     return train_data, test_data
 
-def load_params(param_path='params.yaml'):
+def load_params(param_path: str = 'params.yaml') -> int:
     """
     Load parameters from a YAML file.
     """
@@ -24,7 +24,7 @@ def load_params(param_path='params.yaml'):
     return max_features
 
 # vectorize the text data
-def vectorize_text(train_data, test_data, max_features=None):
+def vectorize_text(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: int = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Vectorize the text data using CountVectorizer.
     """
@@ -44,7 +44,7 @@ def vectorize_text(train_data, test_data, max_features=None):
     return train_df, test_df
 
 # save the vectorized data to data/vectorized
-def save_vectorized_data(train_data, test_data, train_path='train_data_vectorized.csv', test_path='test_data_vectorized.csv'):
+def save_vectorized_data(train_data: pd.DataFrame, test_data: pd.DataFrame, train_path: str = 'train_data_vectorized.csv', test_path: str = 'test_data_vectorized.csv') -> None:
     """
     Save the vectorized data to CSV files.
     """

@@ -7,14 +7,14 @@ import pickle
 import os
 import yaml
 
-def load_vectorized_data(train_path='data/vectorized/train_data_vectorized.csv'):
+def load_vectorized_data(train_path: str = 'data/vectorized/train_data_vectorized.csv') -> pd.DataFrame:
     """
     Load vectorized data from a CSV file.
     """
     train_data = pd.read_csv(train_path)
     return train_data
 
-def evaluation_data(train_data):
+def evaluation_data(train_data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series]:
     """
     Split the training data into training and evaluation sets.
     """
@@ -23,7 +23,7 @@ def evaluation_data(train_data):
     y_eval = evaluation_data['label']
     return train_data, X_eval, y_eval
 
-def load_params(param_path='params.yaml'):
+def load_params(param_path: str = 'params.yaml') -> Tuple[str, float, int, int]:
     """
     Load model building parameters from a YAML file.
     """
@@ -35,7 +35,7 @@ def load_params(param_path='params.yaml'):
         max_depth = params['model_building']['max_depth']
     return eval_metric, learning_rate, n_estimators, max_depth
 
-def build_model(train_data, eval_metric=None, learning_rate=None, n_estimators=None, max_depth=None):
+def build_model(train_data: pd.DataFrame, eval_metric: str = None, learning_rate: float = None, n_estimators: int = None, max_depth: int = None) -> XGBClassifier:
     """
     Build and train the XGBoost model.
     """
@@ -47,14 +47,14 @@ def build_model(train_data, eval_metric=None, learning_rate=None, n_estimators=N
 
     return model
 
-def evaluate_model(model, X_eval, y_eval):
+def evaluate_model(model: XGBClassifier, X_eval: pd.DataFrame, y_eval: pd.Series) -> float:
     """
     Evaluate the model on the evaluation set.
     """
     accuracy = model.score(X_eval, y_eval)
     return accuracy
 
-def save_model(model, model_path='models/xgb_model.pkl'):
+def save_model(model: XGBClassifier, model_path: str = 'models/xgb_model.pkl') -> None:
     """
     Save the trained model to a file.
     """
