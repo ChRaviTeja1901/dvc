@@ -23,6 +23,74 @@ It's written so a school student can follow along.
 - `dvc.yaml`, `dvc.lock`, `params.yaml` - DVC pipeline definitions and parameters.
 - `requirements.txt` - Python packages the project needs.
 
+## Parameters and `params.yaml`
+
+This project uses a `params.yaml` file to store numeric or text settings that control how the scripts run (for example: how many trees to train, a learning rate, or how many features to keep). Keeping these values in `params.yaml` makes it easy to change behavior without editing the Python scripts.
+
+Key points (school-friendly):
+
+- `params.yaml` is just a small text file with YAML syntax. It groups settings by name. Example structure (your file may look different):
+
+```yaml
+preprocessing:
+	max_features: 5000
+
+model:
+	learning_rate: 0.1
+	n_estimators: 100
+```
+
+- To change a parameter, open `params.yaml` in a text editor, change the number or text, save the file, and then run the pipeline again.
+- DVC knows about parameters and can show or compare them. Useful commands (PowerShell):
+
+```powershell
+dvc params show      # list all tracked parameters and their current values
+dvc params diff      # show what's changed since the last Git commit
+dvc repro            # re-run pipeline stages that are out-of-date (including changes from params.yaml)
+```
+
+- Typical workflow when you tweak a parameter:
+	1. Edit `params.yaml` and save.
+	2. Run `dvc repro` to update only the stages affected by that parameter change.
+	3. Inspect results (for example `dvc metrics show` or open `results/evaluation_metrics.json`).
+	4. Commit your `params.yaml` and any updated outputs with Git (and DVC for large files if needed).
+
+- Tip: keep parameter names simple and grouped by stage (e.g., `preprocessing`, `model`) so it's easy to find and explain them.
+
+- Important: keep `dvc.yaml` in sync with `params.yaml`.
+
+	- Each DVC stage can list which parameters it uses so DVC knows what to watch for changes. Those look like `- section.key` under a stage's `params` list in `dvc.yaml`. Example from this project:
+
+		```yaml
+		stages:
+			model_building:
+				cmd: python src/model_building.py
+				deps:
+				- src/model_building.py
+				params:
+				- model_building.learning_rate
+				- model_building.n_estimators
+		```
+
+	- If you add or rename keys in `params.yaml`, update `dvc.yaml` so the appropriate stage includes the new `section.key` entry. If you don't, DVC won't know that changing that param should trigger the stage.
+
+	- Ways to add params to a stage:
+
+		- Manually edit `dvc.yaml` and add the `params` list for the stage (simple and explicit).
+		- Or use `dvc stage add` and pass `--params` to register params when creating a stage. Example (PowerShell):
+
+			```powershell
+			dvc stage add -n model_building -d src/model_building.py -d data/vectorized -o models/xgb_model.pkl --params model_building.learning_rate,model_building.n_estimators python src/model_building.py
+			```
+
+	- After updating `dvc.yaml`, run:
+
+		```powershell
+		dvc params show    # verify DVC sees the params and their values
+		dvc repro          # re-run stages affected by param changes
+		```
+
+
 ## Simple setup (one-time on your machine)
 
 1. Install Python (3.8+ recommended).
