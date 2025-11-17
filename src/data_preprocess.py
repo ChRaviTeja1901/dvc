@@ -12,7 +12,7 @@ nltk.download('wordnet')
 
 
 # load the data from data/raw
-def load_data(train_path: str = 'data/raw/train_data.csv', test_path: str = 'data/raw/test_data.csv') -> Tuple[pd.DataFrame, pd.DataFrame]:
+def load_data(train_path: str = 'data/raw/train_data.csv', test_path: str = 'data/raw/test_data.csv') -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     Load raw data from CSV files.
     """
@@ -75,7 +75,7 @@ def fillna_with_empty(text: str) -> str:
         return ''
     return text
 
-def preprocess_data(train_data: pd.DataFrame, test_data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def preprocess_data(train_data: pd.DataFrame, test_data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     Preprocess the text data in the training and testing datasets.
     """

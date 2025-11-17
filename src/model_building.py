@@ -14,7 +14,7 @@ def load_vectorized_data(train_path: str = 'data/vectorized/train_data_vectorize
     train_data = pd.read_csv(train_path)
     return train_data
 
-def evaluation_data(train_data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series]:
+def evaluation_data(train_data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series]:
     """
     Split the training data into training and evaluation sets.
     """
@@ -23,7 +23,7 @@ def evaluation_data(train_data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFram
     y_eval = evaluation_data['label']
     return train_data, X_eval, y_eval
 
-def load_params(param_path: str = 'params.yaml') -> Tuple[str, float, int, int]:
+def load_params(param_path: str = 'params.yaml') -> tuple[str, float, int, int]:
     """
     Load model building parameters from a YAML file.
     """

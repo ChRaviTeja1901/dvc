@@ -14,7 +14,7 @@ def load_model(model_path: str = 'models/xgb_model.pkl') -> XGBClassifier:
         model = pickle.load(f)
     return model
 
-def load_test_data(test_path: str = 'data/vectorized/test_data_vectorized.csv') -> Tuple[pd.DataFrame, pd.Series]:
+def load_test_data(test_path: str = 'data/vectorized/test_data_vectorized.csv') -> tuple[pd.DataFrame, pd.Series]:
     """
     Load the vectorized test data from a CSV file.
     """
@@ -23,7 +23,7 @@ def load_test_data(test_path: str = 'data/vectorized/test_data_vectorized.csv') 
     y_test = test_data['label']
     return X_test, y_test
 
-def evaluate_model_on_data(model: XGBClassifier, X_test: pd.DataFrame, y_test: pd.Series) -> Tuple[float, float, float, float]:
+def evaluate_model_on_data(model: XGBClassifier, X_test: pd.DataFrame, y_test: pd.Series) -> tuple[float, float, float, float]:
     """
     Evaluate the model on the test data.
     """

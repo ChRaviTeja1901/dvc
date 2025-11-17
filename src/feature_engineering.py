@@ -6,7 +6,7 @@ import yaml
 from sklearn.feature_extraction.text import CountVectorizer
 
 # load the processed data from data/processed
-def load_processed_data(train_path: str = 'data/processed/train_data_processed.csv', test_path: str = 'data/processed/test_data_processed.csv') -> Tuple[pd.DataFrame, pd.DataFrame]:
+def load_processed_data(train_path: str = 'data/processed/train_data_processed.csv', test_path: str = 'data/processed/test_data_processed.csv') -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     Load processed data from CSV files.
     """
@@ -24,7 +24,7 @@ def load_params(param_path: str = 'params.yaml') -> int:
     return max_features
 
 # vectorize the text data
-def vectorize_text(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: int = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def vectorize_text(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: int = None) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     Vectorize the text data using CountVectorizer.
     """

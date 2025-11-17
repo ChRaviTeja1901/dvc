@@ -38,7 +38,7 @@ def load_params(param_path: str = 'params.yaml') -> float:
         test_size = params['data_ingestion']['test_size']
     return test_size
 
-def encode_data(data: pd.DataFrame, test_size: float) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def encode_data(data: pd.DataFrame, test_size: float) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     Encode categorical variables.
 
